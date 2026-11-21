@@ -71,7 +71,7 @@ public class ClanRepositoryService
 	private volatile String lastDatabaseSyncTimestamp = "2026-11-21";
 
 	@Getter
-	private volatile String activeDatabaseSource = "Verified Clan Directory";
+	private volatile String activeDatabaseSource = "Verified Clan Finder";
 
 	@Inject
 	public ClanRepositoryService(Gson gson, OkHttpClient okHttpClient, ClanFinderConfig config)
@@ -101,7 +101,7 @@ public class ClanRepositoryService
 					lastDatabaseSyncTimestamp = payload.getDatabaseUpdatedDate() != null
 						? payload.getDatabaseUpdatedDate()
 						: LocalDate.now().toString();
-					activeDatabaseSource = "Verified Clan Directory (" + validated.size() + " clans)";
+					activeDatabaseSource = "Verified Clan Finder (" + validated.size() + " clans)";
 				}
 			}
 		}

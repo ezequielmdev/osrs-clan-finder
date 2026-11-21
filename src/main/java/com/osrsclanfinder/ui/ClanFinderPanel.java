@@ -250,12 +250,12 @@ public class ClanFinderPanel extends PluginPanel
 		header.add(titleRow);
 		header.add(Box.createVerticalStrut(5));
 
-		// Mode switcher: Clan Directory vs EHB/EHP Rankings
+		// Mode switcher: Clan Finder vs EHB/EHP Rankings
 		JPanel modeRow = new JPanel(new GridLayout(1, 2, 4, 0));
 		modeRow.setBackground(CARD_BG);
 		modeRow.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-		directoryModeBtn = createActionButton("Clan Directory", "Browse visual clan cards, banners, and requirements", new Color(55, 46, 20), ACCENT_GOLD);
+		directoryModeBtn = createActionButton("Clan Finder", "Browse visual clan cards, banners, and requirements", new Color(55, 46, 20), ACCENT_GOLD);
 		rankingsModeBtn = createActionButton("EHB / EHP Rankings", "View official EHB & EHP leaderboards", CARD_INNER_BG, Color.LIGHT_GRAY);
 
 		directoryModeBtn.addActionListener(e -> switchMainView(CARD_DIRECTORY));
@@ -1138,7 +1138,7 @@ public class ClanFinderPanel extends PluginPanel
 			new EmptyBorder(6, 6, 6, 6)
 		));
 
-		JButton backButton = createActionButton("<- Back to List", "Return to the Clan Directory list", CARD_INNER_BG, Color.WHITE);
+		JButton backButton = createActionButton("<- Back to List", "Return to the Clan Finder list", CARD_INNER_BG, Color.WHITE);
 		backButton.addActionListener(e -> switchMainView(CARD_DIRECTORY));
 
 		JButton liveVerifyButton = createActionButton("Sync WOM Live", "Fetch live group metadata from Wise Old Man API", CARD_INNER_BG, ACCENT_GOLD);

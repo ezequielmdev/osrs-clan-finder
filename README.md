@@ -25,8 +25,8 @@
 
 ---
 
-### Step 2 — Browsing & Filtering Clans (`Clan Directory`)
-Inside the **Clan Directory** tab, you can explore verified clans and filter them to suit your playstyle:
+### Step 2 — Browsing & Filtering Clans (`Clan Finder`)
+Inside the **Clan Finder** tab, you can explore verified clans and filter them to suit your playstyle:
 1. **Select a Category**:
    - **All Clans**: Displays every verified clan in the directory.
    - **PvM**: High-level and endgame bossing and raiding clans.

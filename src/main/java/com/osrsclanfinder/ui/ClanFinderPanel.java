@@ -72,7 +72,7 @@ public class ClanFinderPanel extends PluginPanel
 	private static final String URL_WISE_OLD_MAN_GROUPS = "https://wiseoldman.net/groups";
 	private static final String URL_TEMPLE_OSRS_GROUPS = "https://templeosrs.com/groups/view_groups.php";
 	private static final String URL_OSRS_CLANS_DIRECTORY = "https://osrsclans.cc/";
-	private static final String URL_PLUGIN_DISCORD = "https://discord.com/invite/99qEk9cWFW";
+	private static final String URL_PLUGIN_DISCORD = "https://discord.gg/99qEk9cWFW";
 
 	private static final Color PANEL_BG = new Color(20, 22, 26);
 	private static final Color CARD_BG = new Color(30, 33, 39);

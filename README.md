@@ -5,7 +5,7 @@
   **Official Plugin Tutorial & User Guide for RuneLite**
 
   [![RuneLite Plugin Hub](https://img.shields.io/badge/RuneLite-Plugin%20Hub-ffb932?style=for-the-badge)](https://runelite.net/plugin-hub)
-  [![Discord Support & Clan Submissions](https://img.shields.io/badge/Discord-Add%20Your%20Clan%20%2F%20Support-5865F2?style=for-the-badge&logo=discord&logoColor=white)](https://discord.com/invite/99qEk9cWFW)
+  [![Discord Support & Clan Submissions](https://img.shields.io/badge/Discord-Add%20Your%20Clan%20%2F%20Support-5865F2?style=for-the-badge&logo=discord&logoColor=white)](https://discord.gg/99qEk9cWFW)
 </div>
 
 ---
@@ -97,4 +97,4 @@ You can check whether your OSRS account meets a clan's published requirements di
 
 Would you like to add your clan to **OSRS Clan Finder**, update your clan's recruitment requirements, or ask a question about the plugin?
 
-👉 **[Join our Official Discord Server: https://discord.com/invite/99qEk9cWFW](https://discord.com/invite/99qEk9cWFW)**
+👉 **[Join our Official Discord Server: https://discord.gg/99qEk9cWFW](https://discord.gg/99qEk9cWFW)**

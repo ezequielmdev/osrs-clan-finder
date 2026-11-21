@@ -72,6 +72,7 @@ public class ClanFinderPanel extends PluginPanel
 	private static final String URL_WISE_OLD_MAN_GROUPS = "https://wiseoldman.net/groups";
 	private static final String URL_TEMPLE_OSRS_GROUPS = "https://templeosrs.com/groups/view_groups.php";
 	private static final String URL_OSRS_CLANS_DIRECTORY = "https://osrsclans.cc/";
+	private static final String URL_PLUGIN_SUPPORT_DISCORD = "https://discord.gg/99qEk9cWFW";
 
 	private static final Color PANEL_BG = new Color(20, 22, 26);
 	private static final Color CARD_BG = new Color(30, 33, 39);
@@ -286,6 +287,16 @@ public class ClanFinderPanel extends PluginPanel
 		platformLinksRow.add(templeDirBtn);
 		platformLinksRow.add(osrsClansBtn);
 		header.add(platformLinksRow);
+		header.add(Box.createVerticalStrut(4));
+
+		JButton addYourClanBtn = createFullWidthActionButton(
+			"Add Your Clan / Support Discord",
+			"Want to add your clan or have questions? Join https://discord.gg/99qEk9cWFW",
+			new Color(65, 75, 145),
+			Color.WHITE
+		);
+		addYourClanBtn.addActionListener(e -> LinkBrowser.browse(URL_PLUGIN_SUPPORT_DISCORD));
+		header.add(addYourClanBtn);
 
 		return header;
 	}

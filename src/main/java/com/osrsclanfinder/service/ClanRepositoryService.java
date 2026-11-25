@@ -49,7 +49,6 @@ import okhttp3.ResponseBody;
 @Singleton
 public class ClanRepositoryService
 {
-	private static final String BUNDLED_RESOURCE_PATH = "/com/osrsclanfinder/verified_clans.json";
 	private static final String WOM_GROUP_ENDPOINT = "https://api.wiseoldman.net/v2/groups/";
 	private static final String TEMPLE_GROUPS_URL = "https://templeosrs.com/groups/view_groups.php";
 	private static final String OSRSCLANS_API_URL = "https://osrsclans.cc/api/v1/clans";
@@ -68,7 +67,7 @@ public class ClanRepositoryService
 	private final List<ClanEntry> clans = new CopyOnWriteArrayList<>();
 
 	@Getter
-	private volatile String lastDatabaseSyncTimestamp = "2026-11-21";
+	private volatile String lastDatabaseSyncTimestamp = VerifiedClanData.DATABASE_UPDATED_DATE;
 
 	@Getter
 	private volatile String activeDatabaseSource = "Verified Clan Finder";
@@ -83,111 +82,27 @@ public class ClanRepositoryService
 
 	public synchronized void loadBundledDatabase()
 	{
-		try (InputStream is = ClanRepositoryService.class.getResourceAsStream(BUNDLED_RESOURCE_PATH))
+		try
 		{
-			if (is == null)
-			{
-				log.error("Bundled verified_clans.json could not be found at {}", BUNDLED_RESOURCE_PATH);
-				return;
-			}
-			try (InputStreamReader reader = new InputStreamReader(is, StandardCharsets.UTF_8))
-			{
-				ClanDatabasePayload payload = gson.fromJson(reader, ClanDatabasePayload.class);
-				if (payload != null && payload.getClans() != null)
-				{
-					List<ClanEntry> validated = validateAndSanitizeClans(payload.getClans());
-					clans.clear();
-					clans.addAll(validated);
-					lastDatabaseSyncTimestamp = payload.getDatabaseUpdatedDate() != null
-						? payload.getDatabaseUpdatedDate()
-						: LocalDate.now().toString();
-					activeDatabaseSource = "Verified Clan Finder (" + validated.size() + " clans)";
-				}
-			}
+			List<ClanEntry> validated = validateAndSanitizeClans(VerifiedClanData.createVerifiedClans());
+			clans.clear();
+			clans.addAll(validated);
+			lastDatabaseSyncTimestamp = VerifiedClanData.DATABASE_UPDATED_DATE;
+			activeDatabaseSource = "Verified Clan Finder (" + validated.size() + " clans)";
 		}
 		catch (Exception e)
 		{
-			log.error("Failed to load bundled verified clan database", e);
+			log.error("Failed to load verified clan data", e);
 		}
 	}
 
 	public void refreshFromRemoteIfConfigured(Runnable onUpdateCallback)
 	{
-		// Always sync live member counts, EHP, EHB, and Total XP from TempleOSRS, OSRSClans API, and Wise Old Man
+		// Sync live member counts, EHP, EHB, and Total XP from TempleOSRS, OSRSClans API, and Wise Old Man
 		syncAllLiveTrackerStats(() -> {
-			String remoteUrl = config.remoteDatabaseUrl();
-			if (remoteUrl == null || remoteUrl.trim().isEmpty())
-			{
-				if (onUpdateCallback != null)
-				{
-					onUpdateCallback.run();
-				}
-				return;
-			}
-			fetchCustomAdminRemoteJson(remoteUrl.trim(), onUpdateCallback);
-		});
-	}
-
-	private void fetchCustomAdminRemoteJson(String trimmedUrl, Runnable onUpdateCallback)
-	{
-		if (!trimmedUrl.startsWith("https://") && !trimmedUrl.startsWith("http://"))
-		{
-			log.warn("Invalid remote database URL configured: {}", trimmedUrl);
 			if (onUpdateCallback != null)
 			{
 				onUpdateCallback.run();
-			}
-			return;
-		}
-
-		Request request = new Request.Builder()
-			.url(trimmedUrl)
-			.header("User-Agent", USER_AGENT)
-			.get()
-			.build();
-
-		okHttpClient.newCall(request).enqueue(new Callback()
-		{
-			@Override
-			public void onFailure(Call call, IOException e)
-			{
-				log.warn("Failed to fetch remote clan database from {}", trimmedUrl, e);
-				if (onUpdateCallback != null)
-				{
-					onUpdateCallback.run();
-				}
-			}
-
-			@Override
-			public void onResponse(Call call, Response response) throws IOException
-			{
-				try (ResponseBody body = response.body())
-				{
-					if (!response.isSuccessful() || body == null)
-					{
-						log.warn("Unsuccessful response ({}) from remote clan database {}", response.code(), trimmedUrl);
-						return;
-					}
-
-					String jsonText = body.string();
-					ClanDatabasePayload payload = gson.fromJson(jsonText, ClanDatabasePayload.class);
-					if (payload != null && payload.getClans() != null && !payload.getClans().isEmpty())
-					{
-						mergeRemoteClansSafely(payload.getClans(), payload.getDatabaseUpdatedDate());
-						activeDatabaseSource = "Remote Verified URL + Bundled (" + clans.size() + " clans)";
-					}
-				}
-				catch (Exception ex)
-				{
-					log.warn("Failed to parse remote clan database JSON", ex);
-				}
-				finally
-				{
-					if (onUpdateCallback != null)
-					{
-						onUpdateCallback.run();
-					}
-				}
 			}
 		});
 	}

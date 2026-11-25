@@ -119,18 +119,7 @@ public class ClanFinderPlugin extends Plugin
 			return;
 		}
 
-		if ("remoteDatabaseUrl".equals(event.getKey()))
-		{
-			repositoryService.refreshFromRemoteIfConfigured(() ->
-				SwingUtilities.invokeLater(() -> {
-					if (panel != null)
-					{
-						panel.refreshClanList();
-					}
-				})
-			);
-		}
-		else if ("enablePeriodicVerification".equals(event.getKey())
+		if ("enablePeriodicVerification".equals(event.getKey())
 			|| "verificationIntervalMinutes".equals(event.getKey()))
 		{
 			schedulePeriodicVerification();

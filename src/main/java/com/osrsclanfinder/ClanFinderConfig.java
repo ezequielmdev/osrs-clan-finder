@@ -18,8 +18,8 @@ public interface ClanFinderConfig extends Config
 	String playerSection = "playerSection";
 
 	@ConfigSection(
-		name = "Remote Database & Verification",
-		description = "Settings for administrator remote database updates and periodic Wise Old Man verification.",
+		name = "Verification Settings",
+		description = "Settings for periodic Wise Old Man and TempleOSRS verification.",
 		position = 1
 	)
 	String databaseSection = "databaseSection";
@@ -61,23 +61,11 @@ public interface ClanFinderConfig extends Config
 	}
 
 	@ConfigItem(
-		keyName = "remoteDatabaseUrl",
-		name = "Remote Verified Clan JSON URL",
-		description = "Optional administrator JSON URL to update verified clan recruitment requirements without releasing a new plugin version.",
-		section = databaseSection,
-		position = 0
-	)
-	default String remoteDatabaseUrl()
-	{
-		return "";
-	}
-
-	@ConfigItem(
 		keyName = "enablePeriodicVerification",
 		name = "Periodic Wise Old Man Verification",
 		description = "Periodically verify clan metadata and recruitment status against the official Wise Old Man API.",
 		section = databaseSection,
-		position = 1
+		position = 0
 	)
 	default boolean enablePeriodicVerification()
 	{
